@@ -2,15 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
-import App from './App';
+import {App, AppProps} from './App';
 import reportWebVitals from './reportWebVitals';
+import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
 
+
+const apiURL = process.env.REACT_APP_API_URL as string;
+const props: AppProps = {
+  apiURL: apiURL
+};
+
+console.log(apiURL);
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
-    <App />
+<QueryClientProvider client={queryClient}>
+    <App {...props} />
+</QueryClientProvider>
   </React.StrictMode>
 );
 
