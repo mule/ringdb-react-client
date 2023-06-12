@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 import {App, AppProps} from './App';
 import reportWebVitals from './reportWebVitals';
+import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
 
 
 const apiURL = process.env.REACT_APP_API_URL as string;
@@ -15,9 +16,14 @@ console.log(apiURL);
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
+<QueryClientProvider client={queryClient}>
     <App {...props} />
+</QueryClientProvider>
   </React.StrictMode>
 );
 
