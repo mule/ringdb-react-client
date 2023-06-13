@@ -59,23 +59,23 @@ export function HeroCardDetails(props: HeroCardDetailsProps)  {
           <Modal.Body className="show-grid">
             <Container>
               <Row>
-                <Col xs={12} md={8}>
-                    {props?.text}
+                <Col>
+                    <img src={`https://digital.ringsdb.com/${props?.imagesrc}`} alt={props?.name} />
                 </Col>
-                <Col xs={6} md={4}>
-                  .col-xs-6 .col-md-4
+                <Col>
+                  {props?.traits}
                 </Col>
               </Row>
     
               <Row>
-                <Col xs={6} md={4}>
-                  .col-xs-6 .col-md-4
+                <Col>
+                  {props?.text}
                 </Col>
-                <Col xs={6} md={4}>
-                  .col-xs-6 .col-md-4
+                <Col>
+         
                 </Col>
-                <Col xs={6} md={4}>
-                  .col-xs-6 .col-md-4
+                <Col>
+           
                 </Col>
               </Row>
             </Container>
