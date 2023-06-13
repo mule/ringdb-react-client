@@ -35,9 +35,9 @@ test('should notify user when loading decklist data', async ({ page }) => {
     await expect(loadingLocator).toBeVisible();
 });
 
-test('should show decklist data when it  is loaded', async ({ page }) => {
+test('should show decklist data when it is loaded', async ({ page }) => {
 
-    var mockDecklistData = {
+    const mockDecklistData = {
         "id": 1,
         "name": "testing deck1",
         "date_creation": "2018-09-10T13:19:13-03:00",

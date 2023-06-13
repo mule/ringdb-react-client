@@ -11,6 +11,7 @@ import { HeroCard } from './components/HeroCard';
 
 export interface AppProps {
   apiURL: string;
+  env: string;
 }
 
 export function App(props: AppProps) {
@@ -21,8 +22,7 @@ export function App(props: AppProps) {
   const {data, isLoading, isError} = useQuery({
     queryKey: ['deckList', decklistId],
     queryFn: () => fetchDecklist(decklistId),
-    retry: false
-  
+    retry: false 
   });
 
   const handleDecklistIdInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +75,8 @@ export function App(props: AppProps) {
       <Container>
         <Row>
           <h1>Yet another ringsdb client</h1>
-          <span>API URL: {props.apiURL}</span>
+ 
+          { props.env == 'development' && <span>API URL: {props.apiURL}</span>}
         </Row>
         <Row>
           <Col>
@@ -117,7 +118,7 @@ export function App(props: AppProps) {
         </Row>
         <Row>
             {data && heroIds.map((heroId) => 
-            <HeroCard key={heroId} Id={heroId} /> 
+            <HeroCard key={heroId} Id={heroId} ApiUrl={props.apiURL} /> 
             )}
         </Row>
       </Container>
