@@ -8,8 +8,10 @@ import {QueryClientProvider, QueryClient} from '@tanstack/react-query';
 
 
 const apiURL = process.env.REACT_APP_API_URL as string;
+const env = process.env.REACT_APP_ENV as string;
 const props: AppProps = {
-  apiURL: apiURL
+  apiURL: apiURL,
+  env: env
 };
 
 console.log(apiURL);
