@@ -1,5 +1,7 @@
 import { Card, Col, Toast } from "react-bootstrap";
 import { useQuery } from "@tanstack/react-query";
+import { HeroCardDetails } from "./HeroCardDetails";
+import { useState } from "react";
 
 export interface HeroCardProps {
     Id: string;
@@ -7,6 +9,8 @@ export interface HeroCardProps {
 }
 
 export function HeroCard(props: HeroCardProps) {
+
+    const [show, setShow] = useState(false);
 
     const { data, isLoading, isError } = useQuery({
         queryKey: ['deckList', props.Id],
@@ -35,8 +39,14 @@ export function HeroCard(props: HeroCardProps) {
 
     }
 
-    return (<Col key={props.Id}>
-        <Card style={{ width: '18rem' }}>
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+  
+
+    return (
+    <Col key={props.Id}>
+        <Card style={{ width: '18rem' }} onClick={handleShow}>
             <Card.Body>
                 {isLoading &&
                     <Toast>
@@ -61,5 +71,6 @@ export function HeroCard(props: HeroCardProps) {
                     </Toast>}
             </Card.Body>
         </Card>
+        <HeroCardDetails {...data}  show={show} onHide={handleClose} />
     </Col>);
 }
