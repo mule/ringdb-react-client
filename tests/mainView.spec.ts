@@ -37,11 +37,54 @@ test('should notify user when loading decklist data', async ({ page }) => {
 
 test('should show decklist data when it  is loaded', async ({ page }) => {
 
+    var mockDecklistData = {
+        "id": 1,
+        "name": "testing deck1",
+        "date_creation": "2018-09-10T13:19:13-03:00",
+        "date_update": "2018-09-11T12:12:21-03:00",
+        "description_md": "testing deck, what else to say",
+        "user_id": 7670,
+        "heroes": {
+            "001002": 1,
+            "001003": 1,
+            "001004": 1
+        },
+        "slots": {
+            "001002": 1,
+            "001003": 1,
+            "001004": 1,
+            "001013": 2,
+            "001014": 2,
+            "001016": 1,
+            "001021": 2,
+            "001025": 2,
+            "001026": 2,
+            "001028": 2,
+            "001029": 2,
+            "001031": 2,
+            "001034": 2,
+            "001036": 2,
+            "002009": 2,
+            "002013": 2,
+            "002014": 1,
+            "002018": 2,
+            "002019": 1,
+            "003004": 1
+        },
+        "sideslots": [],
+        "version": "1.0",
+        "is_published": true,
+        "nb_votes": 1,
+        "nb_favorites": 1,
+        "nb_comments": 3,
+        "starting_threat": 27
+    }
+
     page.route('**/decklist/1.json?_format=json', async route => {
 
         await route.fulfill({
             status: 200,
-            body: JSON.stringify({ data: 'Mocked response' }),
+            body: JSON.stringify(mockDecklistData),
         });
 
     });
@@ -53,8 +96,13 @@ test('should show decklist data when it  is loaded', async ({ page }) => {
     await deckIdInputLocator.press("Enter");
 
     await page.waitForResponse('**/decklist/1.json?_format=json');
-    const decklistDataLocator = await page.getByText('Mocked response');
-    await expect(decklistDataLocator).toBeVisible();
+    const heroCard1DataLocator = await page.getByText('001002');
+    const heroCard2DataLocator = await page.getByText('001003');
+    const heroCard3DataLocator = await page.getByText('001004');
+
+    await expect(heroCard1DataLocator.first()).toBeVisible();
+    await expect(heroCard2DataLocator.first()).toBeVisible();
+    await expect(heroCard3DataLocator.first()).toBeVisible();
 
 });
 

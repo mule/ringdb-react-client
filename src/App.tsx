@@ -7,6 +7,7 @@ import Toast from 'react-bootstrap/Toast';
 import Placeholder from 'react-bootstrap/Placeholder';
 import Card from 'react-bootstrap/Card';
 import {useQuery} from '@tanstack/react-query';
+import { HeroCard } from './components/HeroCard';
 
 export interface AppProps {
   apiURL: string;
@@ -14,8 +15,6 @@ export interface AppProps {
 
 export function App(props: AppProps) {
 
-
-  
   const [decklistIdInput, setDecklistIdInput] = React.useState("");
   const [decklistId, setDecklistId] = React.useState("");
 
@@ -47,7 +46,7 @@ export function App(props: AppProps) {
 
     }
 
-    return "";
+    return null;
 
   }
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -67,6 +66,9 @@ export function App(props: AppProps) {
       }
     }
   }
+
+  const heroIds = data ? Object.keys(data.heroes) : [];
+
 
   return (
     <div className="App">
@@ -114,15 +116,9 @@ export function App(props: AppProps) {
           </Col>
         </Row>
         <Row>
-          <Card>
-            <Card.Body>
-              {isLoading && <Placeholder as={Card.Text} animation="glow">
-                <Placeholder xs={7} /> <Placeholder xs={4} /> <Placeholder xs={4} />{'decklist be here'}
-                <Placeholder xs={6} /> <Placeholder xs={8} />
-              </Placeholder>}
-              {data && <Card.Text>{JSON.stringify(data)}</Card.Text>}       
-            </Card.Body>
-          </Card>
+            {data && heroIds.map((heroId) => 
+            <HeroCard key={heroId} Id={heroId} /> 
+            )}
         </Row>
       </Container>
     </div>
