@@ -54,7 +54,7 @@ test('Loading hero card shown when deck list is loaded', async ({ page }) => {
             body: JSON.stringify(mockDecklistData)
         });
     });
-    
+
 
     await page.goto('/');
 
@@ -69,15 +69,15 @@ test('Loading hero card shown when deck list is loaded', async ({ page }) => {
 });
 
 test('Loading failed shown if fetching card data fails', async ({ page }) => {
-    
+
     await page.route('**/decklist/**', route => {
-        
+
         route.fulfill({
             status: 200,
             contentType: 'application/json',
             body: JSON.stringify(mockDecklistData)
         });
-     
+
     });
 
     await page.route('**/card/**', route => {
@@ -88,47 +88,44 @@ test('Loading failed shown if fetching card data fails', async ({ page }) => {
             body: JSON.stringify({ error: 'Internal server error' })
         });
     });
-        
-        await page.goto('/');
-    
-        const deckIdInputLocator = page.getByLabel('Search for a decklist here');
-        await deckIdInputLocator.fill('1');
-        await deckIdInputLocator.press("Enter");
 
-        const loadingLocator = page.getByText('Failed to load data');
-        const cardsLoadFailed = await loadingLocator.count();
-        expect(cardsLoadFailed).toBe(3);
+    await page.goto('/');
+
+    const deckIdInputLocator = page.getByLabel('Search for a decklist here');
+    await deckIdInputLocator.fill('1');
+    await deckIdInputLocator.press("Enter");
+
+    const loadingLocator = page.getByText('Failed to load data');
+    const cardsLoadFailed = await loadingLocator.count();
+    expect(cardsLoadFailed).toBe(3);
 });
 
-test('Should show hero card data once it is loaded', async ({ page }) => {
-    
-        await page.route('**/api/public/decklist/**', route => {
-            route.fulfill({
-                status: 200,
-                contentType: 'application/json',
-                body: JSON.stringify(mockDecklistData)
-            });
-        });
-    
-        await page.route('**/api/public/card/**', route => {
-            route.fulfill({
-                status: 200,
-                contentType: 'application/json',
-                body: JSON.stringify({"name": "Mock card data" })  
-            });
-        });
-    
-        await page.goto('/');
-    
-        const deckIdInputLocator = page.getByLabel('Search for a decklist here');
-        await deckIdInputLocator.fill('1');
-        await deckIdInputLocator.press("Enter");
+test('Should show hero card image once the data is loaded', async ({ page }) => {
 
-        await page.screenshot({ path: 'screenshots/heroCards.png' });
-    
-        const heroCardLocator = await page.getByText('{"name": "Mock card data" }');
-        const  cardCount =  await heroCardLocator.count();
-        await expect(cardCount).toBe(3);
+    await page.route('**/api/public/decklist/**', route => {
+        route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify(mockDecklistData)
+        });
+    });
+
+    // await page.route('**/api/public/card/**', route => {
+    //     route.fulfill({
+    //         status: 200,
+    //         contentType: 'application/json',
+    //         body: JSON.stringify({"name": "Mock card data" })  
+    //     });
+    // });
+
+    await page.goto('/');
+
+    const deckIdInputLocator = page.getByLabel('Search for a decklist here');
+    await deckIdInputLocator.fill('1');
+    await deckIdInputLocator.press("Enter");
+    await page.waitForSelector('img');
+    await page.waitForLoadState();
+    await expect(page).toHaveScreenshot('screenshots/heroCards.png');
 
 });
 

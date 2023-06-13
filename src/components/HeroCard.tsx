@@ -48,10 +48,7 @@ export function HeroCard(props: HeroCardProps) {
                         <Toast.Body>Loading hero card</Toast.Body>
                     </Toast>}
                 {data && <>
-                    <Card.Title>{props.Id}</Card.Title>
-                    <Card.Text>
-                        {JSON.stringify(data)}
-                    </Card.Text>
+                    <Card.Img variant="top" src={`https://digital.ringsdb.com/${data.imagesrc}`} alt={data.name} />
                 </>}
                 {isError &&
                     <Toast>
