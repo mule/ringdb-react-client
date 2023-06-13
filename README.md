@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+### Yet another ringsdb client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Small react spa app that allows user to browse decklist and hero card data from https://ringsdb.com using public API described here https://digital.ringsdb.com/api/doc.
 
-## Available Scripts
+The app tries to implement the design described here https://www.figma.com/file/mg1loDP3Z7XjfF6fC60CL3/RingsDB-Wireframe?type=design&node-id=0-1
 
-In the project directory, you can run:
 
-### `npm start`
+### How to run the app
+npm install
+npm start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The app will need a .env file to be present but there should be .env.development file included in the repo. Anyways it needs to be like this:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+REACT_APP_ENV=development
+REACT_APP_API_URL=http://digital.ringsdb.com/api
 
-### `npm test`
+### How to run tests
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+npx playwright test
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Notes to reviewers
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+So as you might have already guessed that this is my solution to OPTION 1 of your programming assignment. :-D
 
-### `npm run eject`
+I liked the assignment and enjoyed coding it. But as you might see from the commits and the backlog I spent more than the recommended 2-3 hours implementing it. Even then I had to cut it short somewhat. The HeroCardDetails component only some of the card details. I figured it's getting close enough so I might as well add you guys to the project at this point.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+I had some additional goals of my own for this project:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Learn how to use githubs projects and CI pipeline better.It's always azure devops at work :-( so I wanted to more experience with it.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- Learn playwright (I've heard good things about it).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- Learn react-query
 
-## Learn More
+- Brush up on my react skills. I'm no "React Wiz kid" I must admit but I've used it ever since the beginning of it.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+But anyways with these additional goals. Things took somewhat longer than the expected time.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Here is the "backlog" for the app if you want to see how the work progressed.
+
+https://github.com/users/mule/projects/1
+
+### Implementation challenges
+
+- The instructions talk about deck's id but in the API the deck endpoint is not public but the decklist is. So I boldly assumed that it is the decklist endpoint that we want to use.
+
+- CORS headers headache. Somehow when hitting an id that is not there or causes some error the CORS header is different. I couldn't get 404 or some other status because the call was blocked. Hate that CORS stuff, I always struggle with it.
+
+- Flaky tests. Generally Playwright tests worked locally except the firefox tests started failing. I don't whats that about. I'll look into it later. 
+
+- Tests working locally but not in the CI-pipeline. Have look into those later too.
+
+- Learning curve for react-query and playwright
+
+
+Thats about it. Thanks for reading. :-)
+
+
+
+
+
+
