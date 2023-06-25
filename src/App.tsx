@@ -56,16 +56,6 @@ export function App(props: AppProps) {
 
   }
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      const form = event.currentTarget.form;
-    
-
-      if (form) {
-        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: false }));
-      }
-    }
-  }
 
   const heroIds = data ? Object.keys(data.heroes) : [];
 
@@ -90,7 +80,6 @@ export function App(props: AppProps) {
                   placeholder="decklist id"
                   value={decklistIdInput}
                   onChange={handleDecklistIdInputChange}
-                  onKeyDown={handleKeyDown}
                 />
                 {/* {isLoading && <Spinner className="ms-4" animation="border" variant="primary" />} */}
               </InputGroup>
@@ -118,7 +107,7 @@ export function App(props: AppProps) {
         </Row>
         <Row>
             {data && heroIds.map((heroId) => 
-            <HeroCard key={heroId} Id={heroId} ApiUrl={props.apiURL} /> 
+            <HeroCard key={heroId} Id={heroId} ApiUrl={props.apiURL}  /> 
             )}
         </Row>
       </Container>
